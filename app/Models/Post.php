@@ -16,8 +16,12 @@ class Post extends Model
 
     protected $fillable = [
         'title', 'slug', 'user_id',
-        'thumbnail','content',
-        'active','published_at'
+        'thumbnail', 'content',
+        'active', 'published_at'
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime'
     ];
 
     public function user(): BelongsTo
@@ -25,9 +29,14 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getFormattedDate()
+    {
+        return $this->published_at->format('H:i (d M Y)');
+    }
 
     public function categories(): BelongsToMany
     {
+        // dd($this->belongsToMany(Category::class)->get());
         return $this->belongsToMany(Category::class);
     }
 }
