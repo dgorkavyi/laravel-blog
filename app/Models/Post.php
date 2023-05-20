@@ -28,6 +28,6 @@ class Post extends Model
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Categuory::class);
+        return $this->belongsToMany(Category::class);
     }
 }
