@@ -41,7 +41,7 @@ class PostController extends Controller
             ->where('active', '=', 1)
             ->whereDate('published_at', '<=', now())
             ->whereDate('published_at', '>', $post->published_at)
-            ->orderBy('published_at', 'desc')
+            ->orderBy('published_at', 'asc')
             ->first();
         return view('post.show', compact('post', 'next', 'prev'));
     }
