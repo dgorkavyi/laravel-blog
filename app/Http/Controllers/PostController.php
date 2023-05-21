@@ -18,7 +18,7 @@ class PostController extends Controller
             ->where('active', '=', 1)
             ->whereDate('published_at', '<', "" . now())
             ->orderBy('published_at', 'desc')
-            ->paginate();
+            ->paginate(5);
 
         return view('home', ['posts' => $posts]);
     }

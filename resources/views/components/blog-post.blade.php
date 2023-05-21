@@ -1,5 +1,4 @@
 <article class="flex flex-col shadow my-4">
-    <!-- Article Image -->
     <a href="#" class="hover:opacity-75">
         <img src="{{ asset($post->getThumbnail()) }}">
     </a>
