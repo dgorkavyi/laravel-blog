@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -29,14 +30,21 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getFormattedDate()
+    public function getFormattedDate(): string
     {
         return $this->published_at->format('H:i (d M Y)');
     }
-
+    public function getPostItemContent(): string
+    {
+        return Str::limit($this->content, 300);
+    }
     public function categories(): BelongsToMany
     {
-        // dd($this->belongsToMany(Category::class)->get());
         return $this->belongsToMany(Category::class);
+    }
+
+    public function getThumbnail(): string
+    {
+        return str_starts_with($this->thumbnail, 'http') ? $this->thumbnail : "/storage/{$this->thumbnail}";
     }
 }
