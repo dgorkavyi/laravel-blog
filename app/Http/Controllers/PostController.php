@@ -6,6 +6,7 @@ use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostController extends Controller
 {
@@ -23,51 +24,25 @@ class PostController extends Controller
         return view('home', ['posts' => $posts]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Post $post)
     {
-        //
-    }
+        if (!$post->active || $post->published_at > now()) {
+            throw new NotFoundHttpException();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
+        $next = Post::query()
+            ->where('active', '=', 1)
+            ->whereDate('published_at', '<=', now())
+            ->whereDate('published_at', '<', $post->published_at)
+            ->orderBy('published_at', 'desc')
+            ->first();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Post $post)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Post $post)
-    {
-        //
+        $prev = Post::query()
+            ->where('active', '=', 1)
+            ->whereDate('published_at', '<=', now())
+            ->whereDate('published_at', '>', $post->published_at)
+            ->orderBy('published_at', 'desc')
+            ->first();
+        return view('post.show', compact('post', 'next', 'prev'));
     }
 }
