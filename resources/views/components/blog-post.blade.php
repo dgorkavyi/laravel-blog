@@ -1,6 +1,6 @@
-<article class="flex flex-col shadow my-4">
-    <a href="{{route('post.show', $post)}}" class="hover:opacity-75">
-        <img src="{{ asset($post->getThumbnail()) }}">
+<article class="flex w-full flex-col shadow my-4">
+    <a href="{{route('post.show', $post)}}" class="w-full block hover:opacity-75">
+            <img src="{{ asset($post->getThumbnail()) }}">
     </a>
     <div class="bg-white flex flex-col justify-start p-6">
         @foreach ($post->categories as $category)

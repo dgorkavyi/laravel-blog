@@ -1,6 +1,6 @@
 <x-layout>
     <section class="w-full md:w-2/3 flex flex-col items-center px-3">
-        <article class="flex flex-col shadow my-4">
+        <article class="flex w-full flex-col shadow my-4">
             <img src="{{ asset($post->getThumbnail()) }}">
             <div class="bg-white flex flex-col justify-start p-6">
                 @foreach ($post->categories as $category)

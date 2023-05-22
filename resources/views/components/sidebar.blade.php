@@ -2,10 +2,10 @@
     
     <div class="w-full bg-white shadow flex flex-col my-4 p-6">
 
-        <h3 class="text-xl font-semibold mb-3">All Categories</h3>
+        <h3 class="text-xl font-semibold mb-3">All Categories ({{$categories->count()}} total)</h3>
         @foreach ($categories as $category)
-            <a href="#" class="text-semibold block py-2 px-3 rounded">
-                {{$category->title}}
+            <a href="{{route('post.category', $category->slug)}}" class="text-semibold block py-2 px-3 rounded">
+                {{$category->title}} ({{$category->total}})
             </a>
         @endforeach
     </div>

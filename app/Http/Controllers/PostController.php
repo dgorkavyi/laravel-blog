@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,10 +22,10 @@ class PostController extends Controller
             ->orderBy('published_at', 'desc')
             ->paginate(5);
 
-        return view('home', ['posts' => $posts]);
+        return view('home', compact('posts'));
     }
 
-    public function show(Post $post)
+    public function show(Post $post): View
     {
         if (!$post->active || $post->published_at > now()) {
             throw new NotFoundHttpException();
@@ -44,5 +45,17 @@ class PostController extends Controller
             ->orderBy('published_at', 'asc')
             ->first();
         return view('post.show', compact('post', 'next', 'prev'));
+    }
+    public function category(Category $category): View
+    {
+        $posts = Post::query()
+        ->join('category_post', 'posts.id', '=', 'category_post.post_id')
+        ->where('category_post.post_id', '=', $category->id)
+        ->where('active', '=', 1)
+        ->whereDate('published_at', '<', now())
+        ->orderBy('published_at', 'desc')
+        ->paginate(5);
+    
+        return view('home', compact('posts'));
     }
 }
