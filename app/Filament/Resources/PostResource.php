@@ -46,6 +46,8 @@ class PostResource extends Resource
                             ]),
                         Forms\Components\RichEditor::make('content')
                             ->required(),
+                        Forms\Components\TextInput::make('meta_title'),
+                        Forms\Components\TextInput::make('meta_description'),
                     ])->columnSpan(8),
                 Card::make()
                     ->schema([
@@ -56,7 +58,7 @@ class PostResource extends Resource
                             ->relationship('categories', 'title')
                             ->required(),
                         Forms\Components\Toggle::make('active')
-                            // ->required(),
+                        // ->required(),
                     ])->columnSpan(4)
             ])->columns(12);
     }
@@ -68,7 +70,7 @@ class PostResource extends Resource
                 Tables\Columns\ImageColumn::make('thumbnail')->visible(),
                 Tables\Columns\TextColumn::make('title'),
                 Tables\Columns\IconColumn::make('active')
-                ->boolean(),
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

@@ -4,7 +4,7 @@
 
         <h3 class="text-xl font-semibold mb-3">All Categories ({{$categories->count()}} total)</h3>
         @foreach ($categories as $category)
-            <a href="{{route('post.category', $category->slug)}}" class="text-semibold block py-2 px-3 rounded">
+            <a href="{{route('post.category', $category->slug)}}" class="{{ request('category')?->slug === $category->slug ? 'bg-blue-600 text-white' : ''}} text-semibold block py-2 px-3 rounded">
                 {{$category->title}} ({{$category->total}})
             </a>
         @endforeach
@@ -15,7 +15,7 @@
         <p class="pb-2">
             {!! \App\Models\TextWidget::getContent('about-us-sidebar') !!}
         </p>
-        <a href="#"
+        <a href="{{route('about')}}"
             class="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-4">
             Get to know us
         </a>
