@@ -36,8 +36,6 @@
                 @endif
             </div>
         </div>
-        </div>
-        </div>
     </section>
-
+    <x-sidebar/>
 </x-layout>
